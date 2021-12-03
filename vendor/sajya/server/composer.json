@@ -1,0 +1,65 @@
+{
+    "name": "sajya/server",
+    "description": "Easy implementation of the JSON-RPC 2.0 server for the Laravel framework.",
+    "keywords": [
+        "rpc",
+        "json-prc",
+        "api"
+    ],
+    "homepage": "https://sajya.github.io",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexandr Chernyaev",
+            "email": "bliz48rus@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "ext-json": "*",
+        "laravel/framework": "8.*",
+        "doctrine/annotations": "^1.12",
+        "phpdocumentor/reflection-docblock": "^5.2"
+    },
+    "require-dev": {
+        "orchestra/testbench": "6.*",
+        "phpunit/php-code-coverage": "^9.0",
+        "phpunit/phpunit": "^9.4",
+        "symfony/var-dumper": "^5.0",
+        "vimeo/psalm": "^4.6"
+    },
+    "conflict": {
+        "mockery/mockery": "<1.4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sajya\\Server\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Sajya\\Server\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "suggest": {
+        "ext-zlib": "Required to compress the response into gzip"
+    },
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sajya\\Server\\ServerServiceProvider"
+            ],
+            "aliases": {
+                "RPC": "Sajya\\Server\\Facades\\RPC"
+            }
+        }
+    }
+}
