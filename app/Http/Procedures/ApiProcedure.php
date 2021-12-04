@@ -25,6 +25,7 @@ class ApiProcedure extends Procedure
         $num = (int) $request->input('num') ?? 0;
         $skip = ($num * 5);
         $data['data'] = Data::whereNotNull('url')->skip($skip)->take(5)->get();
+
         $data['count'] = Data::count();
         return [
             'success' => true,
@@ -42,14 +43,29 @@ class ApiProcedure extends Procedure
         $result = [
             'success' => false,
         ];
-        $data = new Data;
-        $data->url = (string) $url;
 
-        if($data->save()){
-            $result = [
-                'success' => true,
-            ];
+        $exist = Data::where([
+                'url' => $url,
+                'v_id' => $request->input('v_id')
+        ])->first();
 
+        if(!is_null($exist)){
+            $exist->count = $exist->count + 1;
+            $exist->save();
+            if($exist->save()){
+                $result = [
+                    'success' => true,
+                ];
+            }
+        } else {
+            $data = new Data;
+            $data->url = (string) $url;
+            $data->v_id = (string) $request->input('v_id');
+            if($data->save()){
+                $result = [
+                    'success' => true,
+                ];
+            }
         }
         return $result;
     }
